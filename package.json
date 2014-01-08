@@ -1,0 +1,11 @@
+{
+  "name": "timeout-scheduler",
+  "version": "0.1.0",
+  "description": "",
+  "main": "Scheduler.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Nicolas Herment <nherment@gmail.com>",
+  "license": "MIT"
+}
