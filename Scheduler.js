@@ -39,13 +39,18 @@ Scheduler.prototype.has = function(key) {
 };
 
 Scheduler.prototype.cancel = function(key) {
-  delete this._keys.delete(key);
+  this._keys.delete(key);
   // there is no need to go through the list of timeouts because it will be cleared on the next timeout()
 };
-// FIXME: how to make th es6 map friendly?
-// maybe we replace this with something that exposes an iterator?
-Scheduler.prototype.listQueueItems = function() {
-  return Object.keys(this._keys);
+
+// returns the expiry time in JS timestamp and any optional data
+Scheduler.prototype.get = function(key) {
+  return this._keys.get(key);
+};
+
+//Function - because everything else is
+Scheduler.prototype.size = function(k) {
+  return this._keys.size;
 };
 
 Scheduler.prototype._sortTimeouts = function() {

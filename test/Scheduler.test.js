@@ -134,6 +134,21 @@ describe('scheduler', function() {
     scheduler.schedule('key1', 400, {'white': 'cat'});
   })
 
+  it('it should be possible to retrieve a scheduled item by key', function(done) {
+
+    var now = Date.now();
+
+    scheduler.schedule('another_key', 400, {'white': 'cat'});
+
+    var scheduledItem = scheduler.get('another_key');
+
+    assert(scheduledItem.expiry = now + 400);
+    assert.deepEqual(scheduledItem.data, {'white': 'cat'});
+
+    done();
+
+  });
+
 
 })
 
