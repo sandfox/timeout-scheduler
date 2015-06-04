@@ -1,10 +1,14 @@
+'use strict';
+
 var util = require("util");
 var events = require("events");
+
+var Map = require('es6-map');
 
 function Scheduler() {
   events.EventEmitter.call(this);
   this._timeouts = [];
-  this._keys = {};
+  this._keys = new Map();
 
   this._timeout = {
     next: null,
@@ -17,10 +21,10 @@ util.inherits(Scheduler, events.EventEmitter);
 Scheduler.prototype.schedule = function(key, delay, data) {
   var expiry = Date.now() + delay;
 
-  this._keys[key] = {
+  this._keys.set(key,{
     expiry: expiry,
     data: data
-  };
+  });
 
   this._timeouts.push({key: key, expiry: expiry});
 
@@ -31,14 +35,15 @@ Scheduler.prototype.schedule = function(key, delay, data) {
 };
 
 Scheduler.prototype.has = function(key) {
-  return this._keys.hasOwnProperty(key);
+  return this._keys.has(key);
 };
 
 Scheduler.prototype.cancel = function(key) {
-  delete this._keys[key];
+  delete this._keys.delete(key);
   // there is no need to go through the list of timeouts because it will be cleared on the next timeout()
 };
-
+// FIXME: how to make th es6 map friendly?
+// maybe we replace this with something that exposes an iterator?
 Scheduler.prototype.listQueueItems = function() {
   return Object.keys(this._keys);
 };
@@ -69,9 +74,9 @@ Scheduler.prototype.rescheduleNextTimeout = function(expiry) {
 };
 
 Scheduler.prototype.timeoutItem = function(item) {
-  if(this._keys.hasOwnProperty(item.key) && item.expiry === this._keys[item.key].expiry) {
-    var data = this._keys[item.key].data;
-    delete this._keys[item.key];
+  if(this._keys.has(item.key) && item.expiry === this._keys.get(item.key).expiry) {
+    var data = this._keys.get(item.key).data;
+    this._keys.delete(item.key);
     this.emit('timeout', item.key, data);
   }
 }

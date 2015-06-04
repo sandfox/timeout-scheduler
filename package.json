@@ -1,14 +1,30 @@
 {
-  "name": "timeout-scheduler",
-  "version": "0.1.0",
-  "description": "",
+  "name": "sandfox-timeout-scheduler",
+  "version": "1.0.0",
+  "description": "schedule loads and loads of timeouts without actually having lots of timers running",
   "main": "Scheduler.js",
   "scripts": {
     "test": "mocha"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sandfox/timeout-scheduler"
+  },
   "author": "Nicolas Herment <nherment@gmail.com>",
+  "contributors" : [{
+    "name": "sandfox",
+    "email": "james.butler@sandfox.co.uk"
+    }],
   "license": "MIT",
   "devDependencies": {
     "mocha": "^2.2.5"
-  }
+  },
+  "dependencies": {
+    "es6-map": "^0.1.1"
+  },
+  "keywords": [
+    "timeout",
+    "setTimeout",
+    "scheduler"
+  ]
 }
