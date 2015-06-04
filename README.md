@@ -1,5 +1,7 @@
 # sandfox-timeout-scheduler
 
+[![build status](https://secure.travis-ci.org/sandfox/timeout-scheduler.svg?branch=master)](http://travis-ci.org/sandfox/timeout-scheduler)
+
 Forked off the original [timeout-scheduler](https://github.com/nherment/timeout-scheduler) with some fixes and changes.
 
 This module is a way of scheduling alot of timeouts without creating alot of `timers`. It still uses `setTimeout` underneath.
