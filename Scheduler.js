@@ -69,8 +69,9 @@ Scheduler.prototype._rescheduleNextTimeout = function(expiry) {
     clearTimeout(this._timeout.next);
   }
   var self = this;
+  //Why are we always running at least every second?
   var delay = Math.min(expiry - Date.now(), 1000);
-  this._timeout.expiry = expiry;
+  this._timeout.plannedTriggerTime = expiry;
   this._timeout.next = setTimeout(function() {
 
     self._timeout.next = null;
