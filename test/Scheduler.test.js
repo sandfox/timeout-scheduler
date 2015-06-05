@@ -5,7 +5,7 @@ var scheduler;
 
 describe('scheduler', function() {
 
-  before(function() {
+  beforeEach(function() {
     scheduler = new Scheduler();
   })
 
