@@ -59,12 +59,12 @@ Scheduler.prototype._sortTimeouts = function() {
 
     // only re-schedule the timeout if the new one is later (ie. don't fire for nothing)
     if(this._timeouts[0].expiry > this._timeout.plannedTriggerTime) {
-      this.rescheduleNextTimeout(this._timeouts[0].expiry);
+      this._rescheduleNextTimeout(this._timeouts[0].expiry);
     }
   }
 };
 
-Scheduler.prototype.rescheduleNextTimeout = function(expiry) {
+Scheduler.prototype._rescheduleNextTimeout = function(expiry) {
   if(this._timeout.next) {
     clearTimeout(this._timeout.next);
   }
@@ -99,7 +99,7 @@ Scheduler.prototype.timeout = function() {
   }
 
   if(this._timeouts.length > 0) {
-    this.rescheduleNextTimeout(this._timeouts[0].expiry);
+    this._rescheduleNextTimeout(this._timeouts[0].expiry);
   }
 
 };
