@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 var util = require("util");
 var events = require("events");
 
-var Map = require('es6-map');
+var Map = require("es6-map"); //eslint-disable-line no-native-reassign
 
 function Scheduler() {
   events.EventEmitter.call(this);
@@ -21,7 +21,7 @@ util.inherits(Scheduler, events.EventEmitter);
 Scheduler.prototype.schedule = function(key, delay, data) {
   var expiry = Date.now() + delay;
 
-  this._keys.set(key,{
+  this._keys.set(key, {
     expiry: expiry,
     data: data
   });
@@ -49,7 +49,7 @@ Scheduler.prototype.get = function(key) {
 };
 
 //Function - because everything else is
-Scheduler.prototype.size = function(k) {
+Scheduler.prototype.size = function() {
   return this._keys.size;
 };
 
@@ -85,9 +85,9 @@ Scheduler.prototype._timeoutItem = function(item) {
   if(this._keys.has(item.key) && item.expiry === this._keys.get(item.key).expiry) {
     var data = this._keys.get(item.key).data;
     this._keys.delete(item.key);
-    this.emit('timeout', item.key, data);
+    this.emit("timeout", item.key, data);
   }
-}
+};
 
 Scheduler.prototype._internalTimeout = function() {
   var now = Date.now();
@@ -113,7 +113,7 @@ Scheduler.prototype.flush = function() {
     var tm = this._timeouts.shift();
     this._timeoutItem(tm);
   }
-}
+};
 
 function sortByTimestamp(a, b) {
   return a.expiry - b.expiry;
