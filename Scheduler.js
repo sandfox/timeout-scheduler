@@ -80,6 +80,8 @@ Scheduler.prototype._rescheduleNextTimeout = function(expiry) {
 };
 
 Scheduler.prototype.timeoutItem = function(item) {
+  // Only 'timeout' an item if it was triggered at the time it was expecting
+  // While not great this should protect against https://github.com/sandfox/timeout-scheduler/issues/1
   if(this._keys.has(item.key) && item.expiry === this._keys.get(item.key).expiry) {
     var data = this._keys.get(item.key).data;
     this._keys.delete(item.key);
