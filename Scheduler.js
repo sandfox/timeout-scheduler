@@ -75,11 +75,11 @@ Scheduler.prototype._rescheduleNextTimeout = function(expiry) {
   this._timeout.next = setTimeout(function() {
 
     self._timeout.next = null;
-    self.timeout();
+    self._internalTimeout();
   }, delay);
 };
 
-Scheduler.prototype.timeoutItem = function(item) {
+Scheduler.prototype._timeoutItem = function(item) {
   // Only 'timeout' an item if it was triggered at the time it was expecting
   // While not great this should protect against https://github.com/sandfox/timeout-scheduler/issues/1
   if(this._keys.has(item.key) && item.expiry === this._keys.get(item.key).expiry) {
@@ -89,13 +89,13 @@ Scheduler.prototype.timeoutItem = function(item) {
   }
 }
 
-Scheduler.prototype.timeout = function() {
+Scheduler.prototype._internalTimeout = function() {
   var now = Date.now();
 
   while(this._timeouts.length > 0) {
     if(this._timeouts[0].expiry <= now) {
       var tm = this._timeouts.shift();
-      this.timeoutItem(tm);
+      this._timeoutItem(tm);
     } else {
       break;
     }
@@ -111,7 +111,7 @@ Scheduler.prototype.timeout = function() {
 Scheduler.prototype.flush = function() {
   while(this._timeouts.length > 0) {
     var tm = this._timeouts.shift();
-    this.timeoutItem(tm);
+    this._timeoutItem(tm);
   }
 }
 
